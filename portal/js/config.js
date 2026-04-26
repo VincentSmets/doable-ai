@@ -5,7 +5,7 @@
 // ============================================================
 
 const SUPABASE_URL  = 'https://coipzpplkbksuoijueie.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_3PNL_os4z6OL4ck-7jAO7g_ciXkn3Ck';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvaXB6cHBsa2Jrc3VvaWp1ZWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNjc4MDQsImV4cCI6MjA5Mjc0MzgwNH0.4fZzaumC5hZlxQttytOiQQKnGa_e5VEgcE3fnhgWCQs';
 
 // Stripe publishable key (vul in na Stripe setup)
 const STRIPE_PK = 'pk_test_JOUW-STRIPE-PUBLISHABLE-KEY';

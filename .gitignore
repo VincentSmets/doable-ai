@@ -26,3 +26,20 @@ build/
 
 # Logs
 *.log
+
+# Scripts met credentials (lokaal gebruik only)
+*.ps1
+debug-auth.ps1
+gen-magic-link.ps1
+get-service-key.ps1
+set-test-password.ps1
+create-test-client.ps1
+
+# Claude / AI workspace bestanden (niet deel van portal)
+.agents/
+.claude/
+BUSINESS_CONTEXT.md
+CLAUDE.md
+md/
+skills-lock.json
+visuals/

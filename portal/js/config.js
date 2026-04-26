@@ -13,4 +13,4 @@ const STRIPE_PK = 'pk_test_JOUW-STRIPE-PUBLISHABLE-KEY';
 // ============================================================
 // Initialiseer Supabase client (geladen via CDN in elke pagina)
 // ============================================================
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);

@@ -4,8 +4,8 @@
 // Dashboard → Settings → API
 // ============================================================
 
-const SUPABASE_URL  = 'https://JOUW-PROJECT-ID.supabase.co';
-const SUPABASE_ANON = 'JOUW-ANON-PUBLIC-KEY';
+const SUPABASE_URL  = 'https://coipzpplkbksuoijueie.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_3PNL_os4z6OL4ck-7jAO7g_ciXkn3Ck';
 
 // Stripe publishable key (vul in na Stripe setup)
 const STRIPE_PK = 'pk_test_JOUW-STRIPE-PUBLISHABLE-KEY';

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offertes — Doable AI Beheer</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/portal/portal.css" />
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Doable<span>.</span><span class="sidebar-role-badge">Admin</span></div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Overzicht</div>
+      <a href="/portal/admin/index.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <div class="sidebar-section">Klanten</div>
+      <a href="/portal/admin/clients.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>CRM — Klanten</a>
+      <a href="/portal/admin/messages.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Berichten</a>
+      <div class="sidebar-section">Financieel</div>
+      <a href="/portal/admin/invoices.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Facturen</a>
+      <a href="/portal/admin/proposals.html" class="sidebar-link active">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Offertes</a>
+      <div class="sidebar-section">Projecten</div>
+      <a href="/portal/admin/documents.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Documenten</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="userAvatar">V</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="userName">Vincent</div>
+          <div class="sidebar-user-role">Beheerder</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <span class="topbar-title">Offertes</span>
+      <div class="topbar-actions">
+        <select id="filterStatus" class="btn btn-outline btn-sm" style="font-weight:500;padding:5px 10px">
+          <option value="">Alle statussen</option>
+          <option value="draft">Concept</option>
+          <option value="sent">Verzonden</option>
+          <option value="accepted">Geaccepteerd</option>
+          <option value="rejected">Afgewezen</option>
+          <option value="expired">Verlopen</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="openModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nieuwe offerte
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+        <div class="stat-card">
+          <div class="stat-label">Totale waarde</div>
+          <div class="stat-value" id="statTotal">—</div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-label">Openstaand</div>
+          <div class="stat-value" id="statSent">—</div>
+          <div class="stat-sub" id="statSentCount"></div>
+        </div>
+        <div class="stat-card" style="border-left:3px solid #2ECC71">
+          <div class="stat-label">Geaccepteerd</div>
+          <div class="stat-value" id="statAccepted">—</div>
+          <div class="stat-sub" id="statAcceptedCount"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conversie</div>
+          <div class="stat-value" id="statConversion">—</div>
+          <div class="stat-sub">van verzonden</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" id="proposalCount">Offertes</span>
+          <input type="search" id="searchInput" placeholder="Zoek op klant of titel…"
+            style="padding:6px 10px;border:1px solid var(--border-s);border-radius:var(--r);background:var(--bg);color:var(--ink);font-size:13px;width:220px" />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Klant</th>
+                <th>Titel</th>
+                <th>Bedrag</th>
+                <th>Geldig tot</th>
+                <th>Status</th>
+                <th>Acties</th>
+              </tr>
+            </thead>
+            <tbody id="proposalsTable">
+              <tr><td colspan="6" style="text-align:center;padding:32px"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="proposalModal">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Nieuwe offerte</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="proposalForm">
+        <input type="hidden" id="proposalId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Klant *</label>
+            <select id="fClient" required><option value="">— Selecteer klant —</option></select>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="fStatus">
+              <option value="draft">Concept</option>
+              <option value="sent">Verzonden</option>
+              <option value="accepted">Geaccepteerd</option>
+              <option value="rejected">Afgewezen</option>
+              <option value="expired">Verlopen</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Titel *</label>
+          <input type="text" id="fTitle" required placeholder="AI-automatisering intake — De Vries BV" />
+        </div>
+        <div class="form-group">
+          <label>Beschrijving (zichtbaar voor klant)</label>
+          <textarea id="fDesc" rows="4" placeholder="Korte omschrijving van wat de offerte inhoudt…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bedrag (excl. BTW) *</label>
+            <input type="number" id="fAmount" required min="0" step="0.01" placeholder="2500.00" />
+          </div>
+          <div class="form-group">
+            <label>Geldig tot</label>
+            <input type="date" id="fExpiry" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Link naar offertedocument (optioneel)</label>
+          <input type="url" id="fDocUrl" placeholder="https://drive.google.com/…" />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Annuleren</button>
+      <button class="btn btn-primary" onclick="saveProposal()" id="saveBtn">Opslaan</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/portal/js/config.js"></script>
+<script src="/portal/js/auth.js"></script>
+<script>
+let allProposals = [];
+let allClients   = [];
+
+(async () => {
+  const session = await requireAuth('admin');
+  if (!session) return;
+  const name = session.user.user_metadata?.name ?? session.user.email;
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+
+  await Promise.all([loadClients(), loadProposals()]);
+
+  // Default expiry: 30 days
+  document.getElementById('fExpiry').value = new Date(Date.now()+30*86400000).toISOString().split('T')[0];
+})();
+
+async function loadClients() {
+  const { data } = await supabase.from('clients').select('id, company_name').order('company_name');
+  allClients = data ?? [];
+  const sel = document.getElementById('fClient');
+  allClients.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.company_name;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadProposals() {
+  const { data, error } = await supabase
+    .from('proposals')
+    .select('*, clients(company_name)')
+    .order('created_at', { ascending: false });
+
+  if (error) { handleError(error, 'loadProposals'); return; }
+  allProposals = data ?? [];
+  renderProposals(allProposals);
+  updateStats(allProposals);
+  document.getElementById('proposalCount').textContent = `Offertes (${allProposals.length})`;
+}
+
+function updateStats(list) {
+  const total    = list.reduce((s,p) => s + parseFloat(p.amount_eur ?? 0), 0);
+  const sent     = list.filter(p => p.status === 'sent');
+  const accepted = list.filter(p => p.status === 'accepted');
+  const closed   = list.filter(p => ['accepted','rejected'].includes(p.status));
+  const conv     = closed.length > 0 ? Math.round(accepted.length / closed.length * 100) : null;
+
+  document.getElementById('statTotal').textContent        = formatEur(total);
+  document.getElementById('statSent').textContent         = formatEur(sent.reduce((s,p) => s+parseFloat(p.amount_eur??0),0));
+  document.getElementById('statSentCount').textContent    = `${sent.length} open`;
+  document.getElementById('statAccepted').textContent     = formatEur(accepted.reduce((s,p) => s+parseFloat(p.amount_eur??0),0));
+  document.getElementById('statAcceptedCount').textContent = `${accepted.length} gewonnen`;
+  document.getElementById('statConversion').textContent   = conv !== null ? `${conv}%` : '—';
+}
+
+function renderProposals(list) {
+  const tbody = document.getElementById('proposalsTable');
+  if (list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state">
+      <div class="empty-state-icon">📝</div>
+      <div class="empty-state-title">Nog geen offertes</div>
+      <p>Maak je eerste offerte via de knop rechtsboven.</p>
+    </div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td class="td-primary">${esc(p.clients?.company_name ?? '—')}</td>
+      <td>${esc(p.title)}</td>
+      <td style="font-weight:700">${formatEur(p.amount_eur)}</td>
+      <td class="td-muted">${p.expires_at ? formatDate(p.expires_at) : '—'}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td class="td-actions">
+        <button class="btn btn-ghost btn-sm" onclick="editProposal('${p.id}')">Bewerk</button>
+        ${p.doc_url ? `<a href="${esc(p.doc_url)}" target="_blank" class="btn btn-ghost btn-sm">PDF →</a>` : ''}
+        <button class="btn btn-ghost btn-sm" style="color:var(--accent)" onclick="markStatus('${p.id}','accepted')" ${p.status==='accepted'?'style="display:none"':''}>✓ Akkoord</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('searchInput').addEventListener('input', filterProposals);
+document.getElementById('filterStatus').addEventListener('change', filterProposals);
+function filterProposals() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const s = document.getElementById('filterStatus').value;
+  renderProposals(allProposals.filter(p => {
+    const mq = !q || (p.clients?.company_name ?? '').toLowerCase().includes(q) || p.title.toLowerCase().includes(q);
+    const ms = !s || p.status === s;
+    return mq && ms;
+  }));
+}
+
+function openModal(prop = null) {
+  document.getElementById('modalTitle').textContent = prop ? 'Offerte bewerken' : 'Nieuwe offerte';
+  document.getElementById('proposalId').value  = prop?.id ?? '';
+  document.getElementById('fClient').value     = prop?.client_id ?? '';
+  document.getElementById('fTitle').value      = prop?.title ?? '';
+  document.getElementById('fDesc').value       = prop?.description ?? '';
+  document.getElementById('fAmount').value     = prop?.amount_eur ?? '';
+  document.getElementById('fExpiry').value     = prop?.expires_at ?? new Date(Date.now()+30*86400000).toISOString().split('T')[0];
+  document.getElementById('fStatus').value     = prop?.status ?? 'draft';
+  document.getElementById('fDocUrl').value     = prop?.doc_url ?? '';
+  document.getElementById('proposalModal').classList.add('open');
+}
+function closeModal() { document.getElementById('proposalModal').classList.remove('open'); }
+function editProposal(id) { const p = allProposals.find(p => p.id === id); if (p) openModal(p); }
+
+async function markStatus(id, status) {
+  const { error } = await supabase.from('proposals').update({ status }).eq('id', id);
+  if (error) { handleError(error, 'markStatus'); return; }
+  toast('Status bijgewerkt.', 'success');
+  await loadProposals();
+}
+
+async function saveProposal() {
+  const id = document.getElementById('proposalId').value;
+  const payload = {
+    client_id:   document.getElementById('fClient').value,
+    title:       document.getElementById('fTitle').value.trim(),
+    description: document.getElementById('fDesc').value.trim() || null,
+    amount_eur:  parseFloat(document.getElementById('fAmount').value),
+    expires_at:  document.getElementById('fExpiry').value || null,
+    status:      document.getElementById('fStatus').value,
+    doc_url:     document.getElementById('fDocUrl').value.trim() || null,
+  };
+  if (!payload.client_id) { toast('Selecteer een klant.', 'error'); return; }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Opslaan...';
+
+  let error;
+  if (id) {
+    ({ error } = await supabase.from('proposals').update(payload).eq('id', id));
+  } else {
+    ({ error } = await supabase.from('proposals').insert(payload));
+  }
+
+  btn.disabled = false; btn.textContent = 'Opslaan';
+  if (error) { handleError(error, 'saveProposal'); return; }
+  toast(id ? 'Offerte bijgewerkt.' : 'Offerte aangemaakt.', 'success');
+  closeModal();
+  await loadProposals();
+}
+
+function esc(str) {
+  const d = document.createElement('div'); d.textContent = str ?? ''; return d.innerHTML;
+}
+</script>
+</body>
+</html>

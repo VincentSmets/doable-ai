@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doable AI — Meer tijd. Minder gedoe.</title>
+  <meta name="description" content="Doable AI automatiseert repetitieve bedrijfsprocessen voor het Noord-Nederlandse MKB. Minder handmatig werk, meer tijd voor wat écht telt." />
+
+  <!-- Open Graph / LinkedIn / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://doable-ai.nl/" />
+  <meta property="og:title" content="Doable AI — Meer tijd. Minder gedoe." />
+  <meta property="og:description" content="Doable AI automatiseert tijdrovende processen voor het Noord-Nederlandse MKB. Persoonlijk, op maat, direct resultaat." />
+  <meta property="og:image" content="https://doable-ai.nl/linkedin-banner.png" />
+  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:site_name" content="Doable AI" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Doable AI — Meer tijd. Minder gedoe." />
+  <meta name="twitter:description" content="Doable AI automatiseert tijdrovende processen voor het Noord-Nederlandse MKB." />
+  <meta name="twitter:image" content="https://doable-ai.nl/linkedin-banner.png" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://doable-ai.nl/" />
+
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600;1,9..144,700;1,9..144,900&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --bg:           #F2EDE4;
+      --surface:      #FFFFFF;
+      --surface-2:    #F7F3EE;
+      --ink:          #18160F;
+      --ink-muted:    #64604E;
+      --ink-faint:    #A8A391;
+      --accent:       #3D6B50;
+      --accent-h:     #2F5440;
+      --accent-2:     #C4803A;
+      --accent-2-h:   #A86A2F;
+      --accent-soft:  rgba(61,107,80,0.08);
+      --border:       rgba(24,22,15,0.08);
+      --border-s:     rgba(24,22,15,0.14);
+      --r-sm:  4px;
+      --r:     8px;
+      --r-lg:  12px;
+      --r-xl:  16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-md: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.10), 0 32px 64px rgba(0,0,0,0.06);
+      --ease-out: cubic-bezier(0.0,0.0,0.2,1);
+      --ease-spring: cubic-bezier(0.22,0.68,0,1.2);
+    }
+
+    [data-theme="dark"] {
+      --bg:           #0A0906;
+      --surface:      #111009;
+      --surface-2:    #1A1810;
+      --ink:          #EDE8DF;
+      --ink-muted:    #8A8372;
+      --ink-faint:    #55524A;
+      --accent:       #5A9470;
+      --accent-h:     #6AAF82;
+      --accent-2:     #D4904A;
+      --accent-2-h:   #E4A05A;
+      --accent-soft:  rgba(90,148,112,0.10);
+      --border:       rgba(237,232,223,0.07);
+      --border-s:     rgba(237,232,223,0.13);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.20), 0 2px 4px rgba(0,0,0,0.16);
+      --shadow-md: 0 2px 4px rgba(0,0,0,0.24), 0 8px 20px rgba(0,0,0,0.20);
+      --shadow-hover: 0 4px 8px rgba(0,0,0,0.30), 0 16px 40px rgba(0,0,0,0.24);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; }
+
+    /* ── TYPOGRAPHY ── */
+    .display {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(52px, 7.5vw, 112px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    }
+    .heading {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .label-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .label-tag::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(242,237,228,0.82);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      transition: background 0.3s ease;
+    }
+    [data-theme="dark"] nav { background: rgba(10,9,6,0.82); }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2px;
+    }
+    .nav-links a {
+      padding: 6px 12px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      border-radius: var(--r-sm);
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--accent-soft); }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      cursor: pointer;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      height: 1.5px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform 250ms ease, opacity 250ms ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: rgba(242,237,228,0.97);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 8px 0 16px;
+      flex-direction: column;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: transform 200ms ease, opacity 200ms ease;
+      pointer-events: none;
+    }
+    [data-theme="dark"] .mobile-menu { background: rgba(10,9,6,0.97); }
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      transition: color 100ms ease, background 100ms ease;
+    }
+    .mobile-menu a:hover { color: var(--ink); background: var(--accent-soft); }
+    .mobile-menu .mobile-cta {
+      margin: 8px 24px 0;
+      display: flex;
+    }
+    .theme-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: transparent;
+      cursor: pointer;
+      color: var(--ink-muted);
+      transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+    }
+    .theme-btn:hover { border-color: var(--border-s); color: var(--ink); background: var(--accent-soft); }
+    .theme-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .icon-moon { display: none; }
+    [data-theme="dark"] .icon-sun { display: none; }
+    [data-theme="dark"] .icon-moon { display: block; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--r);
+      cursor: pointer;
+      border: none;
+      transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn:active { transform: translateY(0) !important; }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--accent-h); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn-primary-lg { padding: 13px 26px; font-size: 15px; }
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border-s);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); transform: translateY(-1px); }
+    .btn-outline-lg { padding: 12px 24px; font-size: 15px; border-width: 1px; }
+    .btn-amber {
+      background: var(--accent-2);
+      color: white;
+    }
+    .btn-amber:hover { background: var(--accent-2-h); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(196,128,58,0.30); }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 0;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-dot-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(24,22,15,0.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    [data-theme="dark"] .hero-dot-grid {
+      background-image: radial-gradient(circle, rgba(237,232,223,0.06) 1px, transparent 1px);
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,107,80,0.10) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding-top: 60px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 48px;
+      align-items: center;
+      min-height: calc(100svh - 60px);
+      padding: 80px 0 64px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 5px;
+      background: var(--surface);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r-pill, 9999px);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .eyebrow-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eyebrow-dot svg { width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+    .hero-title { margin-bottom: 24px; }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent-2);
+    }
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink-muted);
+      max-width: 52ch;
+      margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .hero-card-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: rgba(61,107,80,0.10);
+      color: var(--accent);
+      border-radius: var(--r-pill, 9999px);
+      font-size: 11px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .flow-steps { display: flex; flex-direction: column; gap: 0; }
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--ink-muted);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .step-icon {
+      width: 32px; height: 32px;
+      border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .step-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .step-icon.orange { background: rgba(196,128,58,0.10); color: var(--accent-2); }
+    .step-icon.green  { background: var(--accent-soft); color: var(--accent); }
+    .step-icon.blue   { background: rgba(59,130,246,0.08); color: #3B82F6; }
+    .hero-mini-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .mini-stat-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--r);
+      background: var(--accent-soft);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .mini-stat-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .mini-stat-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .mini-stat-label { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--accent);
+      padding: 24px 0;
+      overflow: hidden;
+    }
+    .stats-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 36px;
+    }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 26px;
+      color: #fff;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.70);
+      max-width: 100px;
+      line-height: 1.35;
+    }
+    .stat-divider {
+      width: 1px; height: 36px;
+      background: rgba(255,255,255,0.20);
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .heading { margin-bottom: 14px; }
+    .section-sub {
+      font-size: 17px;
+      color: var(--ink-muted);
+      max-width: 52ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── PROBLEMS ── */
+    #probleem { background: var(--ink); }
+    #probleem .heading { color: #EDE8DF; }
+    #probleem .section-header .label-tag { color: rgba(237,232,223,0.50); }
+    #probleem .section-header .label-tag::before { background: rgba(237,232,223,0.40); }
+    #probleem .section-sub { color: rgba(237,232,223,0.55); }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(237,232,223,0.08);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .pain-card {
+      background: rgba(237,232,223,0.04);
+      padding: 28px 24px;
+      transition: background 200ms ease;
+    }
+    .pain-card:hover { background: rgba(237,232,223,0.07); }
+    .pain-quote {
+      font-size: 15px;
+      color: rgba(237,232,223,0.80);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .pain-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(237,232,223,0.35);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+    }
+    .step-card {
+      background: var(--surface);
+      padding: 36px 28px;
+    }
+    .step-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 52px;
+      color: var(--border-s);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .step-desc { font-size: 14.5px; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── WHAT WE AUTOMATE ── */
+    #automatiseren { background: var(--surface-2); }
+    .auto-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .auto-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      transition: transform 200ms var(--ease-out), box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .auto-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-s);
+    }
+    .auto-icon-wrap {
+      width: 40px; height: 40px;
+      border-radius: var(--r);
+      background: var(--accent-soft);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      border: 1px solid rgba(61,107,80,0.12);
+    }
+    .auto-icon-wrap svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .auto-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+    .auto-desc { font-size: 13.5px; color: var(--ink-muted); line-height: 1.6; }
+
+    /* ── CASES ── */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .case-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 200ms var(--ease-out), box-shadow 200ms ease;
+    }
+    .case-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .case-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 3px 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: var(--r-pill, 9999px);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .case-title {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .case-desc { font-size: 13.5px; color: var(--ink-muted); line-height: 1.6; }
+    .case-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .case-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2px;
+      padding: 10px 6px;
+      background: var(--bg);
+      border-radius: var(--r);
+    }
+    .case-metric-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--accent);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .case-metric-label { font-size: 10.5px; color: var(--ink-faint); line-height: 1.35; }
+    .cases-cta {
+      text-align: center;
+      font-size: 15px;
+      color: var(--ink-muted);
+    }
+    .cases-cta a { color: var(--accent); font-weight: 600; text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 150ms ease; }
+    .cases-cta a:hover { text-decoration-color: currentColor; }
+
+    /* ── PRICING ── */
+    #prijzen { background: var(--surface-2); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 32px;
+      position: relative;
+      transition: transform 200ms var(--ease-out), box-shadow 200ms ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .price-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .price-card--featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(61,107,80,0.10), var(--shadow-md);
+    }
+    .price-badge {
+      position: absolute;
+      top: -11px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 14px;
+      border-radius: var(--r-pill, 9999px);
+      white-space: nowrap;
+    }
+    .price-tier { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px; }
+    .price-amount {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 34px;
+      color: var(--ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .price-period { font-size: 13px; color: var(--ink-faint); margin-top: 4px; margin-bottom: 16px; }
+    .price-desc { font-size: 13.5px; color: var(--ink-muted); line-height: 1.6; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .price-list { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+    .price-list li { font-size: 13.5px; color: var(--ink); display: flex; align-items: flex-start; gap: 8px; }
+    .price-list li::before { content: ''; width: 16px; height: 16px; border-radius: 50%; background: var(--accent-soft); border: 1.5px solid rgba(61,107,80,0.25); flex-shrink: 0; margin-top: 1px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%233D6B50' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .price-btn { width: 100%; justify-content: center; }
+
+    /* ── VINCENT BIO ── */
+    .vincent-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      margin-top: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .vincent-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 20px;
+      color: white;
+      overflow: hidden;
+    }
+    .vincent-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .vincent-name { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+    .vincent-role { font-size: 12px; color: var(--ink-muted); line-height: 1.4; }
+
+    /* ── WHY ── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+    .why-left { position: sticky; top: 80px; }
+    .why-overline { font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; font-size: clamp(72px, 10vw, 120px); color: var(--border); line-height: 0.9; letter-spacing: -0.05em; margin-bottom: 20px; font-variant-numeric: tabular-nums; }
+    .diff-item { padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .diff-item:first-child { padding-top: 0; }
+    .diff-title { font-weight: 700; font-size: 16px; margin-bottom: 8px; color: var(--ink); }
+    .diff-desc { font-size: 14.5px; color: var(--ink-muted); line-height: 1.65; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface-2); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .contact-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .contact-option {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color 150ms ease, transform 150ms var(--ease-out), box-shadow 150ms ease;
+    }
+    .contact-option:hover { border-color: var(--accent); transform: translateX(4px); box-shadow: var(--shadow-sm); }
+    .contact-option-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .contact-option-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .contact-option-icon.green { background: var(--accent-soft); color: var(--accent); }
+    .contact-option-icon.blue  { background: rgba(59,130,246,0.07); color: #3B82F6; }
+    .contact-option-icon.amber { background: rgba(196,128,58,0.08); color: var(--accent-2); }
+    .opt-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+    .opt-sub { font-size: 12px; color: var(--ink-muted); }
+    .opt-arrow { margin-left: auto; color: var(--ink-faint); font-size: 18px; transition: transform 150ms ease, color 150ms ease; }
+    .contact-option:hover .opt-arrow { transform: translateX(3px); color: var(--accent); }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 12px; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    input, textarea {
+      background: var(--surface);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      padding: 11px 14px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: var(--ink-faint); }
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(61,107,80,0.10);
+    }
+    textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      background: var(--accent-2);
+      color: white;
+      border: none;
+      border-radius: var(--r);
+      padding: 13px 24px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+    .form-submit:hover { background: var(--accent-2-h); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,128,58,0.25); }
+    .form-submit:active { transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: start;
+      gap: 32px;
+    }
+    .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-style: italic; font-size: 18px; }
+    .footer-logo span { color: var(--accent); }
+    .footer-tagline { font-size: 12px; color: var(--ink-faint); margin-top: 4px; }
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+    }
+    .footer-nav a { font-size: 13px; color: var(--ink-muted); transition: color 150ms ease; }
+    .footer-nav a:hover { color: var(--accent); }
+    .footer-meta { text-align: right; }
+    .footer-copy { font-size: 12px; color: var(--ink-faint); line-height: 1.7; }
+    @media (max-width: 600px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+      .footer-nav { align-items: flex-start; }
+      .footer-meta { text-align: left; }
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .why-left { position: static; }
+      .pain-grid, .steps-grid, .auto-grid, .cases-grid, .pricing-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .why-overline { font-size: 72px; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 64px 0; }
+      .pain-grid, .steps-grid, .auto-grid, .cases-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .stat-divider { display: none; }
+      .stat-item { padding: 10px 20px; }
+      .hero-sub { font-size: 16px; }
+      .case-metrics { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Doable<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#hoe-het-werkt">Hoe het werkt</a></li>
+        <li><a href="#cases">Resultaten</a></li>
+        <li><a href="#prijzen">Prijzen</a></li>
+        <li><a href="#waarom">Waarom wij</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#contact" class="btn btn-primary nav-cta">Gratis intake →</a>
+        <button class="theme-btn" id="themeToggle" aria-label="Thema wisselen">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu openen" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#hoe-het-werkt" onclick="closeMobileMenu()">Hoe het werkt</a>
+    <a href="#cases" onclick="closeMobileMenu()">Resultaten</a>
+    <a href="#prijzen" onclick="closeMobileMenu()">Prijzen</a>
+    <a href="#waarom" onclick="closeMobileMenu()">Waarom wij</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+    <div class="mobile-cta">
+      <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeMobileMenu()">Start gratis intake →</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-dot-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="container hero-inner">
+      <div class="hero-grid">
+
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-dot">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Automatisering voor Noord-Nederlands MKB
+          </div>
+          <h1 class="display hero-title">
+            Meer tijd.<br><em>Minder gedoe.</em>
+          </h1>
+          <p class="hero-sub">
+            Elke dag verliest jouw team uren aan handmatige taken — offertes, werkbonnen, e-mails, rapporten. Wij automatiseren dat. Zodat jij je kan focussen op je vak.
+          </p>
+          <div class="hero-ctas">
+            <a href="#contact" class="btn btn-primary btn-primary-lg">Start gratis intake →</a>
+            <a href="https://wa.me/31600000000" target="_blank" rel="noopener" class="btn btn-outline btn-outline-lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              WhatsApp ons
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div class="hero-card-header">
+              <span class="hero-card-label">Voorbeeld automatisering</span>
+              <span class="hero-badge">⏱&nbsp;4u/week bespaard</span>
+            </div>
+            <div class="flow-steps">
+              <div class="flow-step">
+                <span class="step-icon orange">
+                  <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                Lead stuurt offerteaanvraag
+              </div>
+              <div class="flow-step">
+                <span class="step-icon blue">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                </span>
+                Automatisch verwerkt &amp; gescoord
+              </div>
+              <div class="flow-step">
+                <span class="step-icon green">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                Bevestiging verstuurd binnen 2 min
+              </div>
+              <div class="flow-step">
+                <span class="step-icon green">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </span>
+                Lead gelogd in overzicht
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-mini-card">
+            <div class="mini-stat-icon">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div class="mini-stat-num">−60%</div>
+              <div class="mini-stat-label">no-shows bij afspraken</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <span class="stat-num">5–15u</span>
+          <span class="stat-label">per week bespaard</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">&lt;12&nbsp;wk</span>
+          <span class="stat-label">gemiddelde terugverdientijd</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">Noord-NL</span>
+          <span class="stat-label">lokaal &amp; bereikbaar</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">1</span>
+          <span class="stat-label">vast aanspreekpunt</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEMS -->
+  <section id="probleem">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Herken je dit?</div>
+        <h2 class="heading">Dit kost jouw bedrijf elke dag geld.</h2>
+        <p class="section-sub">Handmatig werk dat niemand wil doen — maar iedereen blijft doen.</p>
+      </div>
+      <div class="pain-grid reveal" style="grid-template-columns: repeat(3,1fr);">
+        <div class="pain-card">
+          <p class="pain-quote">"We zitten de hele dag e-mails te verwerken terwijl we aan klanten moeten werken."</p>
+          <div class="pain-label">Tijdverlies door handmatige communicatie</div>
+        </div>
+        <div class="pain-card">
+          <p class="pain-quote">"Ik ben meer bezig met administratie dan met mijn vak."</p>
+          <div class="pain-label">Administratieve last op de eigenaar</div>
+        </div>
+        <div class="pain-card">
+          <p class="pain-quote">"We laten omzet liggen omdat leads niet snel genoeg worden opgevolgd."</p>
+          <div class="pain-label">Gemiste kansen door trage opvolging</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="hoe-het-werkt">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Hoe het werkt</div>
+        <h2 class="heading">Van probleem naar<br>automatische oplossing.</h2>
+        <p class="section-sub">Geen technisch jargon. Geen lang traject. Gewoon resultaat.</p>
+      </div>
+      <div class="steps-grid reveal">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-title">Gratis intake</div>
+          <p class="step-desc">We plannen een gesprek van 30 minuten. Jij vertelt welke taken de meeste tijd kosten. Wij luisteren en brengen de pijnpunten in kaart.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-title">Automatisering op maat</div>
+          <p class="step-desc">Wij bouwen een slimme oplossing die jouw specifieke proces automatiseert. Geen standaardpakket — alles afgestemd op hoe jouw bedrijf werkt.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-title">Resultaat &amp; begeleiding</div>
+          <p class="step-desc">Binnen enkele weken draait de automatisering. Je merkt direct de tijdwinst — en wij blijven bereikbaar voor aanpassingen als jouw bedrijf groeit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE AUTOMATE -->
+  <section id="automatiseren">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Wat we automatiseren</div>
+        <h2 class="heading">Processen die zichzelf<br>moeten runnen.</h2>
+        <p class="section-sub">Van administratie tot klantcommunicatie — in elk type bedrijf.</p>
+      </div>
+      <div class="auto-grid reveal">
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="auto-title">Documentverwerking</div>
+          <p class="auto-desc">Facturen, offertes en formulieren automatisch verwerken, archiveren en doorsturen zonder handmatige tussenkomst.</p>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="auto-title">Klantcommunicatie</div>
+          <p class="auto-desc">Automatische bevestigingen, herinneringen en follow-ups via e-mail of WhatsApp — gepersonaliseerd en op het juiste moment.</p>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+          </div>
+          <div class="auto-title">Systeem-integraties</div>
+          <p class="auto-desc">Jouw tools praten met elkaar. Data stroomt automatisch van e-mail naar CRM naar boekhouding — zonder kopiëren en plakken.</p>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="auto-title">Lead opvolging</div>
+          <p class="auto-desc">Nieuwe leads worden direct opgevolgd. Automatische notificaties, intake-mails en reminders zodat geen kans verloren gaat.</p>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="auto-title">Rapportages &amp; overzichten</div>
+          <p class="auto-desc">Dagelijkse of wekelijkse rapporten automatisch samengesteld en verstuurd — altijd actueel, zonder handwerk.</p>
+        </div>
+        <div class="auto-card">
+          <div class="auto-icon-wrap">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="auto-title">Maatwerk workflows</div>
+          <p class="auto-desc">Elk bedrijf is anders. Heeft jouw situatie een specifieke oplossing nodig? Wij bouwen het — ongeacht de branche.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section id="cases" style="background: var(--surface-2);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Zo werkt het in de praktijk</div>
+        <h2 class="heading">Concrete tijdwinst.<br>In elk type bedrijf.</h2>
+        <p class="section-sub">Drie situaties die we aanpakken — en wat het oplevert.</p>
+      </div>
+      <div class="cases-grid reveal">
+
+        <div class="case-card">
+          <span class="case-tag">Bouw &amp; installatie</span>
+          <h3 class="case-title">Offerte-aanvragen automatisch opgevangen</h3>
+          <p class="case-desc">Aannemersbedrijf, 12&nbsp;medewerkers. Zes tot acht aanvragen per week — opvolging liep twee dagen achter. Leads beslisten intussen voor een concurrent.</p>
+          <p class="case-desc">Oplossing: automatische bevestiging binnen 2&nbsp;minuten, overzicht in spreadsheet, herinnering na 3&nbsp;dagen zonder reactie.</p>
+          <div class="case-metrics">
+            <div class="case-metric"><span class="case-metric-num">4u</span><span class="case-metric-label">per week bespaard</span></div>
+            <div class="case-metric"><span class="case-metric-num">2&nbsp;min</span><span class="case-metric-label">i.p.v. 2 dagen reactie</span></div>
+            <div class="case-metric"><span class="case-metric-num">+30%</span><span class="case-metric-label">meer opdrachten</span></div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <span class="case-tag">Administratie &amp; logistiek</span>
+          <h3 class="case-title">Werkbonnen die zichzelf verwerken</h3>
+          <p class="case-desc">Installatiebedrijf, 9&nbsp;medewerkers. Werkbonnen op papier werden handmatig overgetypt in Excel — 15&nbsp;minuten per bon, elke dag fouten.</p>
+          <p class="case-desc">Oplossing: digitale bon via telefoon → automatisch in Google&nbsp;Sheets → boekhouder ontvangt elke maandag een kant-en-klare weeksamenvatting.</p>
+          <div class="case-metrics">
+            <div class="case-metric"><span class="case-metric-num">6u</span><span class="case-metric-label">per week bespaard</span></div>
+            <div class="case-metric"><span class="case-metric-num">0</span><span class="case-metric-label">invoerfouten meer</span></div>
+            <div class="case-metric"><span class="case-metric-num">actueel</span><span class="case-metric-label">boekhouddata altijd bij</span></div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <span class="case-tag">Zorg &amp; welzijn</span>
+          <h3 class="case-title">Afsprakenbeheer zonder bellen</h3>
+          <p class="case-desc">Fysiotherapiepraktijk, 7&nbsp;medewerkers. Afspraakreminds via telefoon kostten een uur per dag. No-showpercentage lag rond de 20%.</p>
+          <p class="case-desc">Oplossing: automatische WhatsApp-reminder 24&nbsp;uur voor elke afspraak — patiënt bevestigt of verzet direct, zonder tussenpersoon.</p>
+          <div class="case-metrics">
+            <div class="case-metric"><span class="case-metric-num">5u</span><span class="case-metric-label">per week teruggewonnen</span></div>
+            <div class="case-metric"><span class="case-metric-num">−60%</span><span class="case-metric-label">no-shows</span></div>
+            <div class="case-metric"><span class="case-metric-num">9/10</span><span class="case-metric-label">tevredenheid</span></div>
+          </div>
+        </div>
+
+      </div>
+      <p class="cases-cta reveal">Jouw situatie ziet er anders uit? <a href="#contact">Vertel ons wat je doet</a> — wij bouwen het.</p>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="prijzen">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Transparante prijzen</div>
+        <h2 class="heading">Geen verrassingen.<br>Gewoon eerlijk.</h2>
+        <p class="section-sub">Kies wat bij je situatie past. Alles begint met een gratis intake.</p>
+      </div>
+      <div class="pricing-grid reveal">
+
+        <div class="price-card price-card--featured">
+          <div class="price-badge">Begin hier</div>
+          <div class="price-tier">Instap</div>
+          <div class="price-amount">€500 – 1.000</div>
+          <div class="price-period">eenmalig</div>
+          <p class="price-desc">Eén probleem opgelost, direct resultaat. Inclusief documentatie en 30&nbsp;dagen support.</p>
+          <ul class="price-list">
+            <li>Analyse van jouw situatie</li>
+            <li>Maatwerk automatisering</li>
+            <li>Live gezet, alles uitgelegd</li>
+            <li>30 dagen bereikbaar</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary price-btn">Start gratis intake</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Automation Pakket</div>
+          <div class="price-amount">€1.500 – 3.500</div>
+          <div class="price-period">eenmalig</div>
+          <p class="price-desc">Meerdere samenhangende oplossingen die een heel bedrijfsproces automatiseren.</p>
+          <ul class="price-list">
+            <li>Volledig proces in kaart</li>
+            <li>3–5 gekoppelde automatiseringen</li>
+            <li>Training voor jouw team</li>
+            <li>3 maanden begeleiding</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline price-btn">Start gratis intake</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Maandelijks beheer</div>
+          <div class="price-amount">€200 – 400</div>
+          <div class="price-period">per maand</div>
+          <p class="price-desc">Wij houden jouw automatiseringen draaiende en passen aan als jouw bedrijf groeit.</p>
+          <ul class="price-list">
+            <li>Monitoring en onderhoud</li>
+            <li>Aanpassingen en uitbreidingen</li>
+            <li>Maandelijks check-in</li>
+            <li>Altijd bereikbaar</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline price-btn">Start gratis intake</a>
+        </div>
+
+      </div>
+      <p class="section-sub reveal" style="margin-top:28px; font-size:14px;">Niet zeker wat past? Begin met de gratis intake — daarna weet je precies wat de investering oplevert.</p>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="waarom" style="background: var(--surface-2);">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-left reveal">
+          <div class="label-tag">Waarom Doable AI</div>
+          <div class="why-overline">4×</div>
+          <h2 class="heading">Redenen waarom bedrijven voor ons kiezen.</h2>
+          <div class="vincent-card">
+            <div class="vincent-avatar">V</div>
+            <div>
+              <div class="vincent-name">Vincent Smets</div>
+              <div class="vincent-role">Oprichter Doable AI · M365 Engineer · Groningen</div>
+            </div>
+          </div>
+        </div>
+        <div class="why-right reveal">
+          <div class="diff-item">
+            <div class="diff-title">Persoonlijk, niet generiek</div>
+            <p class="diff-desc">Geen standaardpakket dat ergens in een la verdwijnt. Wij luisteren eerst naar jouw specifieke situatie en bouwen daarna een oplossing die écht past bij hoe jouw bedrijf werkt.</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Directe ROI, kleine investering</div>
+            <p class="diff-desc">De meeste klanten verdienen hun investering binnen 6 tot 12&nbsp;weken terug door de uren die ze besparen. Transparante prijzen, geen verborgen kosten, geen verrassingen achteraf.</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Bereikbaar als langetermijnpartner</div>
+            <p class="diff-desc">Wij leveren op en verdwijnen niet. Je hebt één aanspreekpunt dat je kent, begrijpt en bereikbaar blijft — voor aanpassingen, vragen en uitbreidingen als jouw bedrijf groeit.</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Geen technische kennis nodig</div>
+            <p class="diff-desc">Jij vertelt ons het probleem in gewone taal. Wij lossen het op. Je hoeft niets te begrijpen van de techniek achter de oplossing — die werkt gewoon, op de achtergrond.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="label-tag">Aan de slag</div>
+        <h2 class="heading">Klaar om uren te besparen?<br>Neem contact op.</h2>
+        <p class="section-sub">De eerste stap is een gratis gesprek van 30&nbsp;minuten. Daarna weet je precies wat automatisering jou oplevert.</p>
+      </div>
+      <div class="contact-grid reveal">
+        <div>
+          <div class="contact-options">
+            <a href="https://wa.me/31600000000" target="_blank" rel="noopener" class="contact-option">
+              <div class="contact-option-icon green">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </div>
+              <div>
+                <div class="opt-title">WhatsApp ons direct</div>
+                <div class="opt-sub">Snel antwoord, laagdrempelig</div>
+              </div>
+              <span class="opt-arrow">→</span>
+            </a>
+            <a href="https://cal.eu/doable" target="_blank" rel="noopener" class="contact-option">
+              <div class="contact-option-icon blue">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <div class="opt-title">Plan een gratis intake</div>
+                <div class="opt-sub">30&nbsp;minuten, vrijblijvend gesprek</div>
+              </div>
+              <span class="opt-arrow">→</span>
+            </a>
+            <a href="mailto:hallo@doable-ai.nl" class="contact-option">
+              <div class="contact-option-icon amber">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="opt-title">Stuur een e-mail</div>
+                <div class="opt-sub">hallo@doable-ai.nl</div>
+              </div>
+              <span class="opt-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Naam</label>
+              <input type="text" id="name" placeholder="Jan de Vries" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="company">Bedrijf</label>
+              <input type="text" id="company" placeholder="De Vries BV" autocomplete="organization" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mailadres</label>
+            <input type="email" id="email" placeholder="jan@devries.nl" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefoonnummer <span style="font-weight:400;opacity:.6;text-transform:none;letter-spacing:0">(optioneel)</span></label>
+            <input type="tel" id="phone" placeholder="+31 6 12 34 56 78" autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label for="message">Wat wil je automatiseren?</label>
+            <textarea id="message" placeholder="Beschrijf kort welke taken de meeste tijd kosten in jouw bedrijf..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            Verstuur bericht <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">Doable<span>.</span></div>
+          <div class="footer-tagline">Meer tijd. Minder gedoe.</div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigatie">
+          <a href="#hoe-het-werkt">Hoe het werkt</a>
+          <a href="#cases">Resultaten</a>
+          <a href="#prijzen">Prijzen</a>
+          <a href="#waarom">Waarom wij</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="footer-meta">
+          <div class="footer-copy">
+            © 2026 Doable AI<br>
+            Groningen, Nederland<br>
+            <a href="mailto:hallo@doable-ai.nl" style="color:inherit">hallo@doable-ai.nl</a><br>
+            KvK: [invullen na registratie]<br>
+            <a href="/privacy" style="color:inherit">Privacyverklaring</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // CONFIGURATIE — pas aan na hosting
+    // Vervang door productie-URL zodra de site live staat, bijv:
+    // const WEBHOOK_URL = 'https://jouw-server.nl/webhook/lead-opvolging';
+    // Of gebruik een Cloudflare Tunnel / ngrok URL als tussenoplossing.
+    const WEBHOOK_URL = 'http://localhost:5678/webhook/lead-opvolging';
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      mobileMenu.setAttribute('aria-hidden', !open);
+    });
+    function closeMobileMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      mobileMenu.setAttribute('aria-hidden', true);
+    }
+    // Sluit menu bij klik buiten nav
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobileMenu();
+    });
+
+    // Theme toggle
+    const html = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', stored);
+
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Bezig met versturen…';
+      btn.disabled = true;
+
+      const payload = {
+        naam:     document.getElementById('name').value,
+        email:    document.getElementById('email').value,
+        bedrijf:  document.getElementById('company').value,
+        bericht:  document.getElementById('message').value,
+        telefoon: document.getElementById('phone').value
+      };
+
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        btn.innerHTML = '✓ Verstuurd — we nemen snel contact op!';
+        btn.style.background = 'var(--accent)';
+        e.target.reset();
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; }, 5000);
+      })
+      .catch(() => {
+        btn.innerHTML = 'Fout — probeer het opnieuw';
+        btn.style.background = '#c0392b';
+        btn.disabled = false;
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 3000);
+      });
+    }
+  </script>
+
+</body>
+</html>

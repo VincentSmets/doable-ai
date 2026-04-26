@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn Portaal — Doable AI</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/portal/portal.css" />
+</head>
+<body>
+<div class="portal-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Doable<span>.</span><span class="sidebar-role-badge">Klant</span></div>
+    <nav class="sidebar-nav">
+      <a href="/portal/client/index.html" class="sidebar-link active">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Overzicht
+      </a>
+      <a href="/portal/client/messages.html" class="sidebar-link" id="navMessages">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Berichten
+      </a>
+      <a href="/portal/client/invoices.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Facturen
+      </a>
+      <a href="/portal/client/documents.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Documenten
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="userAvatar">K</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="userName">—</div>
+          <div class="sidebar-user-role" id="userCompany">—</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <span class="topbar-title" id="welcomeTitle">Welkom</span>
+      <div class="topbar-actions">
+        <a href="/portal/client/messages.html" class="btn btn-primary btn-sm">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Stuur een bericht
+        </a>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- WELKOM BANNER -->
+      <div style="background:var(--accent-soft);border:1px solid rgba(61,107,80,0.15);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px">
+        <div style="font-size:32px">👋</div>
+        <div>
+          <div style="font-weight:600;font-size:15px" id="bannerName">Welkom in je portaal</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:2px">Hier vind je al je facturen, documenten en berichten met Doable AI.</div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+        <div class="stat-card">
+          <div class="stat-label">Actieve projecten</div>
+          <div class="stat-value" id="statProjects">—</div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-label">Openstaande facturen</div>
+          <div class="stat-value" id="statInvoices">—</div>
+          <div class="stat-sub" id="statInvoiceAmount"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Documenten</div>
+          <div class="stat-value" id="statDocs">—</div>
+          <div class="stat-sub"><a href="/portal/client/documents.html" style="color:var(--accent)">Bekijk →</a></div>
+        </div>
+      </div>
+
+      <!-- TWEE KOLOMMEN -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+        <!-- PROJECTEN -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Mijn projecten</span>
+          </div>
+          <div id="projectsList">
+            <div class="empty-state">
+              <div class="empty-state-icon">🚀</div>
+              <div class="empty-state-title">Nog geen projecten</div>
+              <p>Neem contact op om te starten.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENTE FACTUREN -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Openstaande facturen</span>
+            <a href="/portal/client/invoices.html" class="btn btn-ghost btn-sm">Alle facturen →</a>
+          </div>
+          <div id="invoicesList">
+            <div class="empty-state">
+              <div class="empty-state-icon">✅</div>
+              <div class="empty-state-title">Geen openstaande facturen</div>
+              <p>Alles is betaald — top!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENTE DOCUMENTEN -->
+      <div class="card" style="margin-top:20px">
+        <div class="card-header">
+          <span class="card-title">Recente documenten</span>
+          <a href="/portal/client/documents.html" class="btn btn-ghost btn-sm">Alle documenten →</a>
+        </div>
+        <div id="documentsList">
+          <div class="empty-state">
+            <div class="empty-state-icon">📁</div>
+            <div class="empty-state-title">Nog geen documenten</div>
+            <p>Opgeleverde documenten verschijnen hier.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT BANNER -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div>
+          <div style="font-weight:600;font-size:14px">Vragen? Vincent staat voor je klaar.</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:2px">Via het berichtensysteem of rechtstreeks via e-mail.</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <a href="/portal/client/messages.html" class="btn btn-primary btn-sm">Stuur bericht</a>
+          <a href="mailto:hallo@doable-ai.nl" class="btn btn-outline btn-sm">E-mail</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/portal/js/config.js"></script>
+<script src="/portal/js/auth.js"></script>
+<script>
+(async () => {
+  const session = await requireAuth('client');
+  if (!session) return;
+
+  const client = await getMyClient();
+  if (!client) { toast('Klantaccount niet gevonden. Neem contact op.', 'error'); return; }
+
+  // Naam instellen
+  const name = session.user.user_metadata?.name ?? session.user.email;
+  document.getElementById('userName').textContent    = name;
+  document.getElementById('userCompany').textContent = client.company_name;
+  document.getElementById('userAvatar').textContent  = name.charAt(0).toUpperCase();
+  document.getElementById('welcomeTitle').textContent = `Welkom, ${name.split(' ')[0]}`;
+  document.getElementById('bannerName').textContent  = `Welkom terug, ${name.split(' ')[0]}!`;
+
+  // Data laden
+  const [projectsRes, invoicesRes, docsRes, unread] = await Promise.all([
+    supabase.from('projects').select('*').eq('client_id', client.id).order('created_at', { ascending: false }),
+    supabase.from('invoices').select('*').eq('client_id', client.id).in('status', ['sent','overdue']).order('created_at', { ascending: false }),
+    supabase.from('documents').select('*').eq('client_id', client.id).order('created_at', { ascending: false }).limit(5),
+    getUnreadCount(client.id)
+  ]);
+
+  const projects = projectsRes.data ?? [];
+  const invoices = invoicesRes.data ?? [];
+  const docs     = docsRes.data ?? [];
+
+  // Stats
+  document.getElementById('statProjects').textContent = projects.filter(p => ['intake','building','support'].includes(p.status)).length;
+  document.getElementById('statInvoices').textContent = invoices.length;
+  if (invoices.length > 0) {
+    const total = invoices.reduce((s, i) => s + parseFloat(i.amount_eur ?? 0), 0);
+    document.getElementById('statInvoiceAmount').textContent = formatEur(total) + ' openstaand';
+  }
+  document.getElementById('statDocs').textContent = docs.length;
+
+  // Ongelezen berichten badge
+  if (unread > 0) {
+    document.getElementById('navMessages').insertAdjacentHTML('beforeend', `<span class="badge-dot">${unread}</span>`);
+  }
+
+  // Projecten
+  if (projects.length > 0) {
+    document.getElementById('projectsList').innerHTML = projects.map(p => `
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">${esc(p.title)}</div>
+          <div style="font-size:12px;color:var(--ink-faint);margin-top:2px">${p.start_date ? formatDate(p.start_date) : 'Startdatum onbekend'}</div>
+        </div>
+        ${statusBadge(p.status)}
+      </div>
+    `).join('');
+  }
+
+  // Facturen
+  if (invoices.length > 0) {
+    document.getElementById('invoicesList').innerHTML = invoices.map(i => `
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:600;font-size:13.5px">${esc(i.invoice_number)} — ${esc(i.description)}</div>
+          <div style="font-size:12px;color:var(--ink-faint);margin-top:2px">Vervaldatum: ${formatDate(i.due_date)}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-weight:700;font-size:14px">${formatEur(i.amount_eur)}</span>
+          ${i.stripe_checkout_url
+            ? `<a href="${i.stripe_checkout_url}" target="_blank" class="btn btn-amber btn-sm">Betaal nu</a>`
+            : statusBadge(i.status)}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Documenten
+  if (docs.length > 0) {
+    document.getElementById('documentsList').innerHTML = docs.map(d => `
+      <div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">📄</span>
+          <div>
+            <div style="font-weight:600;font-size:13.5px">${esc(d.title)}</div>
+            <div style="font-size:11px;color:var(--ink-faint)">${formatDate(d.created_at)}</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="downloadDoc('${d.file_path}', '${esc(d.title)}')">
+          Download
+        </button>
+      </div>
+    `).join('');
+  }
+})();
+
+async function downloadDoc(path, title) {
+  const { data, error } = await supabase.storage.from('documents').createSignedUrl(path, 60);
+  if (error) { handleError(error, 'download'); return; }
+  const a = document.createElement('a');
+  a.href = data.signedUrl; a.download = title;
+  a.click();
+}
+
+function esc(str) {
+  const d = document.createElement('div'); d.textContent = str ?? ''; return d.innerHTML;
+}
+</script>
+</body>
+</html>

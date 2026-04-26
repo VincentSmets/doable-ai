@@ -1,0 +1,28 @@
+# Environment variables — NOOIT committen
+.env
+.env.local
+.env.production
+*.secret
+
+# Supabase local dev
+.supabase/
+
+# Node (als we later tooling toevoegen)
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/settings.json
+.idea/
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berichten — Doable AI Portaal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/portal/portal.css" />
+  <style>
+    .chat-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 56px);
+      overflow: hidden;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg);
+    }
+    .chat-footer {
+      padding: 16px 20px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1;
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      padding: 10px 12px;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--ink);
+      resize: none;
+      max-height: 120px;
+      min-height: 40px;
+      line-height: 1.5;
+    }
+    .chat-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61,107,80,0.10); }
+    .chat-send-btn {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: var(--r);
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 140ms;
+    }
+    .chat-send-btn:hover { background: var(--accent-h); }
+    .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .chat-send-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .chat-info-bar {
+      padding: 10px 20px;
+      background: var(--accent-soft);
+      border-bottom: 1px solid rgba(61,107,80,0.12);
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Doable<span>.</span><span class="sidebar-role-badge">Klant</span></div>
+    <nav class="sidebar-nav">
+      <a href="/portal/client/index.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Overzicht
+      </a>
+      <a href="/portal/client/messages.html" class="sidebar-link active" id="navMessages">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Berichten
+      </a>
+      <a href="/portal/client/invoices.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Facturen
+      </a>
+      <a href="/portal/client/documents.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Documenten
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="userAvatar">K</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="userName">—</div>
+          <div class="sidebar-user-role" id="userCompany">—</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content" style="display:flex;flex-direction:column;padding:0;overflow:hidden">
+    <header class="topbar" style="flex-shrink:0">
+      <span class="topbar-title">Berichten met Doable AI</span>
+    </header>
+
+    <div class="chat-wrapper">
+      <div class="chat-info-bar">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;flex-shrink:0;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Berichten worden gelezen door Vincent van Doable AI. Reactie binnen 1 werkdag.
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      <div class="chat-footer">
+        <textarea class="chat-input" id="chatInput" placeholder="Stel je vraag of stuur een update…" rows="1"></textarea>
+        <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/portal/js/config.js"></script>
+<script src="/portal/js/auth.js"></script>
+<script>
+let myClientId = null;
+let msgSubscription = null;
+
+(async () => {
+  const session = await requireAuth('client');
+  if (!session) return;
+
+  const client = await getMyClient();
+  if (!client) { toast('Klantaccount niet gevonden.', 'error'); return; }
+  myClientId = client.id;
+
+  const name = session.user.user_metadata?.name ?? session.user.email;
+  document.getElementById('userName').textContent    = name;
+  document.getElementById('userCompany').textContent = client.company_name;
+  document.getElementById('userAvatar').textContent  = name.charAt(0).toUpperCase();
+
+  await loadMessages();
+
+  // Mark all incoming as read
+  await supabase.from('messages')
+    .update({ read_at: new Date().toISOString() })
+    .eq('client_id', myClientId)
+    .eq('sender_role', 'admin')
+    .is('read_at', null);
+
+  // Real-time subscription
+  msgSubscription = supabase
+    .channel(`client-messages-${myClientId}`)
+    .on('postgres_changes', {
+      event: 'INSERT', schema: 'public', table: 'messages',
+      filter: `client_id=eq.${myClientId}`
+    }, () => loadMessages())
+    .subscribe();
+})();
+
+async function loadMessages() {
+  const { data: messages } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('client_id', myClientId)
+    .order('created_at', { ascending: true });
+
+  const container = document.getElementById('chatMessages');
+
+  if (!messages || messages.length === 0) {
+    container.innerHTML = `
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--ink-faint)">
+        <div style="font-size:32px">👋</div>
+        <div style="font-size:14px;font-weight:600;color:var(--ink-muted)">Begin het gesprek</div>
+        <div style="font-size:13px">Stel een vraag of stuur een update aan Vincent.</div>
+      </div>`;
+    return;
+  }
+
+  let lastDate = '';
+  container.innerHTML = messages.map(m => {
+    const isAdmin = m.sender_role === 'admin';
+    const d = new Date(m.created_at);
+    const dateStr = d.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
+    const timeStr = d.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+    let dateDiv = '';
+    if (dateStr !== lastDate) {
+      lastDate = dateStr;
+      dateDiv = `<div style="text-align:center;font-size:11px;color:var(--ink-faint);margin:8px 0;font-weight:600;letter-spacing:0.04em">${dateStr}</div>`;
+    }
+    return `${dateDiv}<div class="msg-bubble ${isAdmin ? 'msg-in' : 'msg-out'}">
+      ${isAdmin ? '<div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:3px">Vincent — Doable AI</div>' : ''}
+      <div class="msg-text">${esc(m.content)}</div>
+      <div class="msg-time">${timeStr}</div>
+    </div>`;
+  }).join('');
+
+  container.scrollTop = container.scrollHeight;
+}
+
+async function sendMessage() {
+  if (!myClientId) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  input.value = '';
+
+  const { error } = await supabase.from('messages').insert({
+    client_id: myClientId,
+    sender_role: 'client',
+    content: text,
+  });
+
+  btn.disabled = false;
+  if (error) { handleError(error, 'sendMessage'); input.value = text; return; }
+  await loadMessages();
+}
+
+document.getElementById('chatInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+function esc(str) {
+  const d = document.createElement('div'); d.textContent = str ?? ''; return d.innerHTML;
+}
+</script>
+</body>
+</html>

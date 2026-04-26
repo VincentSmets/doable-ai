@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facturen — Doable AI Beheer</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/portal/portal.css" />
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Doable<span>.</span><span class="sidebar-role-badge">Admin</span></div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Overzicht</div>
+      <a href="/portal/admin/index.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <div class="sidebar-section">Klanten</div>
+      <a href="/portal/admin/clients.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>CRM — Klanten</a>
+      <a href="/portal/admin/messages.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Berichten</a>
+      <div class="sidebar-section">Financieel</div>
+      <a href="/portal/admin/invoices.html" class="sidebar-link active">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Facturen</a>
+      <a href="/portal/admin/proposals.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Offertes</a>
+      <div class="sidebar-section">Projecten</div>
+      <a href="/portal/admin/documents.html" class="sidebar-link">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Documenten</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="userAvatar">V</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="userName">Vincent</div>
+          <div class="sidebar-user-role">Beheerder</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <span class="topbar-title">Facturen</span>
+      <div class="topbar-actions">
+        <select id="filterStatus" class="btn btn-outline btn-sm" style="font-weight:500;padding:5px 10px">
+          <option value="">Alle statussen</option>
+          <option value="draft">Concept</option>
+          <option value="sent">Verzonden</option>
+          <option value="overdue">Verlopen</option>
+          <option value="paid">Betaald</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="openModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nieuwe factuur
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+        <div class="stat-card">
+          <div class="stat-label">Totaal dit jaar</div>
+          <div class="stat-value" id="statTotal">—</div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-label">Openstaand</div>
+          <div class="stat-value" id="statOpen">—</div>
+          <div class="stat-sub" id="statOpenCount"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Verlopen</div>
+          <div class="stat-value" id="statOverdue">—</div>
+          <div class="stat-sub" id="statOverdueCount"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ontvangen</div>
+          <div class="stat-value" id="statPaid">—</div>
+          <div class="stat-sub" id="statPaidCount"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" id="invoiceCount">Facturen</span>
+          <input type="search" id="searchInput" placeholder="Zoek op klant of nummer…"
+            style="padding:6px 10px;border:1px solid var(--border-s);border-radius:var(--r);background:var(--bg);color:var(--ink);font-size:13px;width:220px" />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nummer</th>
+                <th>Klant</th>
+                <th>Omschrijving</th>
+                <th>Bedrag</th>
+                <th>Vervaldatum</th>
+                <th>Status</th>
+                <th>Acties</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesTable">
+              <tr><td colspan="7" style="text-align:center;padding:32px"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="invoiceModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Nieuwe factuur</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="invoiceForm">
+        <input type="hidden" id="invoiceId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Klant *</label>
+            <select id="fClient" required>
+              <option value="">— Selecteer klant —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Factuurnummer *</label>
+            <input type="text" id="fNumber" required placeholder="2024-001" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Omschrijving *</label>
+          <input type="text" id="fDesc" required placeholder="AI-automatisering fase 1" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bedrag (excl. BTW) *</label>
+            <input type="number" id="fAmount" required min="0" step="0.01" placeholder="1500.00" />
+          </div>
+          <div class="form-group">
+            <label>BTW %</label>
+            <select id="fVat">
+              <option value="21">21%</option>
+              <option value="9">9%</option>
+              <option value="0">0% (vrijgesteld)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Factuurdatum</label>
+            <input type="date" id="fDate" />
+          </div>
+          <div class="form-group">
+            <label>Vervaldatum</label>
+            <input type="date" id="fDue" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Status</label>
+            <select id="fStatus">
+              <option value="draft">Concept</option>
+              <option value="sent">Verzonden</option>
+              <option value="overdue">Verlopen</option>
+              <option value="paid">Betaald</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Stripe checkout URL</label>
+            <input type="url" id="fStripe" placeholder="https://checkout.stripe.com/…" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Annuleren</button>
+      <button class="btn btn-primary" onclick="saveInvoice()" id="saveBtn">Opslaan</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/portal/js/config.js"></script>
+<script src="/portal/js/auth.js"></script>
+<script>
+let allInvoices = [];
+let allClients  = [];
+
+(async () => {
+  const session = await requireAuth('admin');
+  if (!session) return;
+  const name = session.user.user_metadata?.name ?? session.user.email;
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+
+  await Promise.all([loadClients(), loadInvoices()]);
+
+  // Auto-fill today + 30 days
+  const today = new Date().toISOString().split('T')[0];
+  const due   = new Date(Date.now() + 30*86400000).toISOString().split('T')[0];
+  document.getElementById('fDate').value = today;
+  document.getElementById('fDue').value  = due;
+})();
+
+async function loadClients() {
+  const { data } = await supabase.from('clients').select('id, company_name').order('company_name');
+  allClients = data ?? [];
+  const sel = document.getElementById('fClient');
+  allClients.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.company_name;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadInvoices() {
+  const { data, error } = await supabase
+    .from('invoices')
+    .select('*, clients(company_name)')
+    .order('created_at', { ascending: false });
+
+  if (error) { handleError(error, 'loadInvoices'); return; }
+  allInvoices = data ?? [];
+  renderInvoices(allInvoices);
+  updateStats(allInvoices);
+  document.getElementById('invoiceCount').textContent = `Facturen (${allInvoices.length})`;
+}
+
+function updateStats(list) {
+  const thisYear = new Date().getFullYear();
+  const total   = list.reduce((s, i) => s + parseFloat(i.amount_eur ?? 0), 0);
+  const open    = list.filter(i => i.status === 'sent');
+  const overdue = list.filter(i => i.status === 'overdue');
+  const paid    = list.filter(i => i.status === 'paid');
+
+  document.getElementById('statTotal').textContent     = formatEur(total);
+  document.getElementById('statOpen').textContent      = formatEur(open.reduce((s,i) => s+parseFloat(i.amount_eur??0),0));
+  document.getElementById('statOpenCount').textContent = `${open.length} factuur${open.length!==1?'en':''}`;
+  document.getElementById('statOverdue').textContent   = formatEur(overdue.reduce((s,i) => s+parseFloat(i.amount_eur??0),0));
+  document.getElementById('statOverdueCount').textContent = `${overdue.length} verlopen`;
+  document.getElementById('statPaid').textContent      = formatEur(paid.reduce((s,i) => s+parseFloat(i.amount_eur??0),0));
+  document.getElementById('statPaidCount').textContent = `${paid.length} betaald`;
+}
+
+function renderInvoices(list) {
+  const tbody = document.getElementById('invoicesTable');
+  if (list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">
+      <div class="empty-state-icon">🧾</div>
+      <div class="empty-state-title">Nog geen facturen</div>
+      <p>Maak je eerste factuur via de knop rechtsboven.</p>
+    </div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(i => `
+    <tr>
+      <td class="td-primary">${esc(i.invoice_number)}</td>
+      <td>${esc(i.clients?.company_name ?? '—')}</td>
+      <td class="td-muted">${esc(i.description)}</td>
+      <td style="font-weight:700">${formatEur(i.amount_eur)}</td>
+      <td class="td-muted">${i.due_date ? formatDate(i.due_date) : '—'}</td>
+      <td>${statusBadge(i.status)}</td>
+      <td class="td-actions">
+        <button class="btn btn-ghost btn-sm" onclick="editInvoice('${i.id}')">Bewerk</button>
+        ${i.stripe_checkout_url
+          ? `<a href="${esc(i.stripe_checkout_url)}" target="_blank" class="btn btn-ghost btn-sm">Stripe →</a>`
+          : ''}
+        <button class="btn btn-ghost btn-sm btn-danger" onclick="markPaid('${i.id}')" ${i.status==='paid'?'style="display:none"':''}>Betaald</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Zoek + filter
+document.getElementById('searchInput').addEventListener('input', filterInvoices);
+document.getElementById('filterStatus').addEventListener('change', filterInvoices);
+
+function filterInvoices() {
+  const q      = document.getElementById('searchInput').value.toLowerCase();
+  const status = document.getElementById('filterStatus').value;
+  const filtered = allInvoices.filter(i => {
+    const matchQ = !q || (i.clients?.company_name ?? '').toLowerCase().includes(q) || i.invoice_number.toLowerCase().includes(q);
+    const matchS = !status || i.status === status;
+    return matchQ && matchS;
+  });
+  renderInvoices(filtered);
+}
+
+function openModal(inv = null) {
+  document.getElementById('modalTitle').textContent = inv ? 'Factuur bewerken' : 'Nieuwe factuur';
+  document.getElementById('invoiceId').value     = inv?.id ?? '';
+  document.getElementById('fClient').value       = inv?.client_id ?? '';
+  document.getElementById('fNumber').value       = inv?.invoice_number ?? '';
+  document.getElementById('fDesc').value         = inv?.description ?? '';
+  document.getElementById('fAmount').value       = inv?.amount_eur ?? '';
+  document.getElementById('fVat').value          = inv?.vat_pct ?? '21';
+  document.getElementById('fDate').value         = inv?.invoice_date ?? new Date().toISOString().split('T')[0];
+  document.getElementById('fDue').value          = inv?.due_date ?? new Date(Date.now()+30*86400000).toISOString().split('T')[0];
+  document.getElementById('fStatus').value       = inv?.status ?? 'draft';
+  document.getElementById('fStripe').value       = inv?.stripe_checkout_url ?? '';
+  document.getElementById('invoiceModal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('invoiceModal').classList.remove('open'); }
+
+function editInvoice(id) {
+  const i = allInvoices.find(i => i.id === id);
+  if (i) openModal(i);
+}
+
+async function markPaid(id) {
+  const { error } = await supabase.from('invoices').update({ status: 'paid', paid_at: new Date().toISOString() }).eq('id', id);
+  if (error) { handleError(error, 'markPaid'); return; }
+  toast('Factuur gemarkeerd als betaald.', 'success');
+  await loadInvoices();
+}
+
+async function saveInvoice() {
+  const id = document.getElementById('invoiceId').value;
+  const payload = {
+    client_id:          document.getElementById('fClient').value,
+    invoice_number:     document.getElementById('fNumber').value.trim(),
+    description:        document.getElementById('fDesc').value.trim(),
+    amount_eur:         parseFloat(document.getElementById('fAmount').value),
+    vat_pct:            parseInt(document.getElementById('fVat').value),
+    invoice_date:       document.getElementById('fDate').value || null,
+    due_date:           document.getElementById('fDue').value || null,
+    status:             document.getElementById('fStatus').value,
+    stripe_checkout_url: document.getElementById('fStripe').value.trim() || null,
+  };
+  if (!payload.client_id) { toast('Selecteer een klant.', 'error'); return; }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Opslaan...';
+
+  let error;
+  if (id) {
+    ({ error } = await supabase.from('invoices').update(payload).eq('id', id));
+  } else {
+    ({ error } = await supabase.from('invoices').insert(payload));
+  }
+
+  btn.disabled = false; btn.textContent = 'Opslaan';
+  if (error) { handleError(error, 'saveInvoice'); return; }
+  toast(id ? 'Factuur bijgewerkt.' : 'Factuur aangemaakt.', 'success');
+  closeModal();
+  await loadInvoices();
+}
+
+function esc(str) {
+  const d = document.createElement('div'); d.textContent = str ?? ''; return d.innerHTML;
+}
+</script>
+</body>
+</html>

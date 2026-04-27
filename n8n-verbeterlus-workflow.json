@@ -1,0 +1,230 @@
+{
+  "name": "Doable AI — Dagelijkse Verbeterlus",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "da000001-0000-0000-0000-000000000001",
+      "name": "Dagelijks 08:00 (ma–vr)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 380]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://doable-ai-khaki.vercel.app",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "da000001-0000-0000-0000-000000000002",
+      "name": "Haal website op",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 380]
+    },
+    {
+      "parameters": {
+        "operation": "readAllRows",
+        "documentId": {
+          "__rl": true,
+          "value": "1Lp9gvhWEOfSFgRpqY5e_27WZmnsEHZHFIwzIyXoUb4M",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "da000001-0000-0000-0000-000000000003",
+      "name": "Haal leads op",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [640, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VERVANG_MET_JOUW_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// ── STAP 1: Haal website tekst op ──────────────────────────────────\nconst websiteRaw = $('Haal website op').first().json.data || '';\nconst websiteTekst = websiteRaw\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<!--[\\s\\S]*?-->/g, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/\\s+/g, ' ')\n  .trim()\n  .substring(0, 2500);\n\n// ── STAP 2: Filter leads van gisteren ──────────────────────────────\nconst nu = new Date();\nconst gisteren = new Date(nu.getTime() - 24 * 60 * 60 * 1000);\nconst alleLeads = $input.all();\n\nconst leadsGisteren = alleLeads.filter(item => {\n  if (!item.json.datum) return false;\n  try {\n    const d = new Date(item.json.datum);\n    return d >= gisteren && d <= nu;\n  } catch { return false; }\n});\n\nconst leadsAantal = leadsGisteren.length;\n\nconst leadsTekst = leadsAantal === 0\n  ? 'Geen nieuwe leads in de afgelopen 24 uur.'\n  : leadsGisteren.map(l => {\n      const naam    = l.json.naam    || 'Onbekend';\n      const bedrijf = l.json.bedrijf || '—';\n      const score   = l.json.score   || '—';\n      const bericht = (l.json.bericht || '').substring(0, 120);\n      return `• ${naam} (${bedrijf}) | Score: ${score}\\n  \"${bericht}\"`;\n    }).join('\\n');\n\n// ── STAP 3: Bouw Claude prompt ──────────────────────────────────────\nconst vandaag = nu.toLocaleDateString('nl-NL', {\n  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'\n});\n\nconst prompt = `Je bent een strategisch AI-assistent voor Doable AI.\nDoable AI = automatiseringsbedrijf in Groningen voor Noord-NL MKB. Eigenaar: Vincent Smets (1 persoon).\nTagline: \"Meer tijd. Minder gedoe.\"\n\nVandaag: ${vandaag}\n\n═══ NIEUWE LEADS (afgelopen 24 uur) ═══\n${leadsTekst}\n\n═══ WEBSITE TEKST (huidig) ═══\n${websiteTekst}\n\nGeef een bondig dagrapport. Reageer UITSLUITEND met valide JSON (geen extra tekst):\n{\n  \"samenvatting\": \"1–2 zinnen over de dag en wat opvalt\",\n  \"leads\": {\n    \"inzicht\": \"Wat zeggen de leads over je doelgroep of messaging? (of: geen leads → wat kun je doen?)\",\n    \"actie\": \"De 1 concrete actie die Vincent vandaag kan doen m.b.t. leads\"\n  },\n  \"website_tip\": {\n    \"sectie\": \"Naam van de sectie (bijv. Hero, Prijzen, Hoe het werkt)\",\n    \"probleem\": \"Kort beschreven wat beter kan\",\n    \"fix\": \"De exacte verbetering in 1–2 zinnen\"\n  },\n  \"seo_kans\": \"1 specifiek zoekwoord of content-idee voor Noord-NL MKB dat nog ontbreekt\",\n  \"prioriteit_vandaag\": \"De #1 meest impactvolle actie voor Doable AI vandaag\"\n}`;\n\nreturn [{\n  json: {\n    vandaag,\n    leadsAantal,\n    leadsTekst,\n    prompt\n  }\n}];"
+      },
+      "id": "da000001-0000-0000-0000-000000000004",
+      "name": "Bereid Claude prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $vars.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "string",
+        "body": "={{ JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1024, messages: [{ role: 'user', content: $json.prompt }] }) }}"
+      },
+      "id": "da000001-0000-0000-0000-000000000005",
+      "name": "Claude — Daganalyse",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 380]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Parseer Claude response + bouw WhatsApp bericht\nconst raw   = $input.first().json;\nconst tekst = raw?.content?.[0]?.text || '{}';\n\nlet rapport = {};\ntry {\n  const match = tekst.match(/\\{[\\s\\S]*\\}/);\n  rapport = match ? JSON.parse(match[0]) : {};\n} catch {\n  rapport = { samenvatting: tekst.substring(0, 200), prioriteit_vandaag: '— (parse fout, check n8n logs)' };\n}\n\nconst vandaag     = $('Bereid Claude prompt').first().json.vandaag;\nconst leadsAantal = $('Bereid Claude prompt').first().json.leadsAantal;\nconst leadsTekst  = $('Bereid Claude prompt').first().json.leadsTekst;\n\n// Bouw het WhatsApp bericht (max ~1500 tekens)\nconst regels = [\n  `🤖 *Doable AI — Dagrapport*`,\n  `📅 ${vandaag}`,\n  ``,\n  `📋 *Samenvatting*`,\n  rapport.samenvatting || '—',\n  ``,\n  `👥 *Leads (${leadsAantal} nieuw)*`,\n  rapport.leads?.inzicht || '—',\n  rapport.leads?.actie ? `💡 Actie: ${rapport.leads.actie}` : '',\n  ``,\n  `🌐 *Website tip — ${rapport.website_tip?.sectie || '?'}*`,\n  rapport.website_tip?.probleem || '—',\n  rapport.website_tip?.fix ? `✅ Fix: ${rapport.website_tip.fix}` : '',\n  ``,\n  `🔍 *SEO kans*`,\n  rapport.seo_kans || '—',\n  ``,\n  `⚡ *Prioriteit vandaag*`,\n  rapport.prioriteit_vandaag || '—',\n];\n\nconst bericht = regels.filter(r => r !== '').join('\\n');\n\nreturn [{\n  json: {\n    bericht,\n    rapport,\n    vandaag,\n    leadsAantal\n  }\n}];"
+      },
+      "id": "da000001-0000-0000-0000-000000000006",
+      "name": "Bouw WhatsApp bericht",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{ $vars.WHATSAPP_PHONE_ID }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $vars.WHATSAPP_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "string",
+        "body": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $vars.VINCENT_PHONE, type: 'text', text: { body: $json.bericht } }) }}"
+      },
+      "id": "da000001-0000-0000-0000-000000000007",
+      "name": "WhatsApp → Vincent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1520, 260]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $vars.RAPPORT_SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Dagrapporten",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "datum":         "={{ $json.vandaag }}",
+            "leads_aantal":  "={{ $json.leadsAantal }}",
+            "samenvatting":  "={{ $json.rapport.samenvatting }}",
+            "website_tip":   "={{ $json.rapport.website_tip?.sectie + ': ' + $json.rapport.website_tip?.fix }}",
+            "seo_kans":      "={{ $json.rapport.seo_kans }}",
+            "prioriteit":    "={{ $json.rapport.prioriteit_vandaag }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "da000001-0000-0000-0000-000000000008",
+      "name": "Log in Sheets (Dagrapporten)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1520, 500],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VERVANG_MET_JOUW_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Dagelijks 08:00 (ma–vr)": {
+      "main": [
+        [{"node": "Haal website op", "type": "main", "index": 0}]
+      ]
+    },
+    "Haal website op": {
+      "main": [
+        [{"node": "Haal leads op", "type": "main", "index": 0}]
+      ]
+    },
+    "Haal leads op": {
+      "main": [
+        [{"node": "Bereid Claude prompt", "type": "main", "index": 0}]
+      ]
+    },
+    "Bereid Claude prompt": {
+      "main": [
+        [{"node": "Claude — Daganalyse", "type": "main", "index": 0}]
+      ]
+    },
+    "Claude — Daganalyse": {
+      "main": [
+        [{"node": "Bouw WhatsApp bericht", "type": "main", "index": 0}]
+      ]
+    },
+    "Bouw WhatsApp bericht": {
+      "main": [
+        [
+          {"node": "WhatsApp → Vincent", "type": "main", "index": 0},
+          {"node": "Log in Sheets (Dagrapporten)", "type": "main", "index": 0}
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "da000001-0000-0000-0000-000000000099",
+  "meta": {
+    "instanceId": "doable-ai-local"
+  },
+  "id": "doable-ai-verbeterlus-v1",
+  "tags": [{"name": "doable-ai"}]
+}

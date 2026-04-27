@@ -3,28 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Doable AI — Meer tijd. Minder gedoe.</title>
-  <meta name="description" content="Doable AI automatiseert repetitieve bedrijfsprocessen voor het Noord-Nederlandse MKB. Minder handmatig werk, meer tijd voor wat écht telt." />
+  <title>Doable AI | Automatisering voor MKB in Noord-Nederland</title>
+  <meta name="description" content="Doable AI automatiseert tijdrovende bedrijfsprocessen voor MKB in Groningen en Noord-Nederland. Bespaar 5–15 uur per week. Start met een gratis intake van 30 minuten." />
 
   <!-- Open Graph / LinkedIn / social sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://doable-ai.nl/" />
-  <meta property="og:title" content="Doable AI — Meer tijd. Minder gedoe." />
-  <meta property="og:description" content="Doable AI automatiseert tijdrovende processen voor het Noord-Nederlandse MKB. Persoonlijk, op maat, direct resultaat." />
-  <meta property="og:image" content="https://doable-ai.nl/linkedin-banner.png" />
+  <meta property="og:title" content="Doable AI | Automatisering voor MKB in Noord-Nederland" />
+  <meta property="og:description" content="Doable AI automatiseert tijdrovende bedrijfsprocessen voor MKB in Groningen en Noord-Nederland. Bespaar 5–15 uur per week. Gratis intake van 30 minuten." />
+  <meta property="og:image" content="https://doable-ai-khaki.vercel.app/linkedin-banner.png" />
   <meta property="og:locale" content="nl_NL" />
   <meta property="og:site_name" content="Doable AI" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Doable AI — Meer tijd. Minder gedoe." />
-  <meta name="twitter:description" content="Doable AI automatiseert tijdrovende processen voor het Noord-Nederlandse MKB." />
-  <meta name="twitter:image" content="https://doable-ai.nl/linkedin-banner.png" />
+  <meta name="twitter:title" content="Doable AI | Automatisering voor MKB in Noord-Nederland" />
+  <meta name="twitter:description" content="Doable AI automatiseert tijdrovende bedrijfsprocessen voor MKB in Groningen en Noord-Nederland. Bespaar 5–15 uur per week." />
+  <meta name="twitter:image" content="https://doable-ai-khaki.vercel.app/linkedin-banner.png" />
 
-  <!-- Canonical -->
+  <!-- Canonical — actualiseren naar doable-ai.nl zodra domein live is -->
   <link rel="canonical" href="https://doable-ai.nl/" />
 
+  <!-- Extra SEO meta -->
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="automatisering MKB, bedrijfsprocessen automatiseren, procesautomatisering Groningen, Noord-Nederland automatisering, lead opvolging automatiseren, bedrijfsautomatisering MKB" />
+  <meta name="geo.region" content="NL-GR" />
+  <meta name="geo.placename" content="Groningen" />
+
   <link rel="icon" href="favicon.ico" />
+
+  <!-- ── STRUCTURED DATA ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://doable-ai.nl/#business",
+        "name": "Doable AI",
+        "description": "AI-automatisering van bedrijfsprocessen voor MKB in Groningen en Noord-Nederland. Persoonlijk, op maat en direct resultaat.",
+        "url": "https://doable-ai.nl",
+        "email": "hallo@doable-ai.nl",
+        "logo": "https://doable-ai-khaki.vercel.app/logo.png",
+        "image": "https://doable-ai-khaki.vercel.app/linkedin-banner.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Groningen",
+          "addressRegion": "Groningen",
+          "postalCode": "9700",
+          "addressCountry": "NL"
+        },
+        "areaServed": [
+          {"@type": "AdministrativeArea", "name": "Groningen"},
+          {"@type": "AdministrativeArea", "name": "Friesland"},
+          {"@type": "AdministrativeArea", "name": "Drenthe"},
+          {"@type": "AdministrativeArea", "name": "Noord-Nederland"}
+        ],
+        "priceRange": "€€",
+        "sameAs": ["https://cal.eu/doable"],
+        "foundingDate": "2026",
+        "employee": {
+          "@type": "Person",
+          "name": "Vincent Smets",
+          "jobTitle": "Oprichter"
+        }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://doable-ai.nl/#service",
+        "name": "Bedrijfsprocessen Automatiseren",
+        "provider": {"@id": "https://doable-ai.nl/#business"},
+        "serviceType": "Procesautomatisering",
+        "description": "Maatwerk automatisering van repetitieve bedrijfsprocessen voor MKB. Van lead opvolging tot documentverwerking en klantcommunicatie.",
+        "areaServed": "Noord-Nederland",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Automatisering pakketten",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Instap automatisering",
+              "description": "Één probleem opgelost, direct resultaat. Inclusief documentatie en 30 dagen support.",
+              "price": "500",
+              "priceCurrency": "EUR",
+              "priceSpecification": {"@type": "PriceSpecification", "minPrice": 500, "maxPrice": 1000}
+            },
+            {
+              "@type": "Offer",
+              "name": "Automation Pakket",
+              "description": "3–5 gekoppelde automatiseringen die een heel bedrijfsproces aanpakken.",
+              "priceSpecification": {"@type": "PriceSpecification", "minPrice": 1500, "maxPrice": 3500}
+            },
+            {
+              "@type": "Offer",
+              "name": "Maandelijks Beheer",
+              "description": "Monitoring, onderhoud en uitbreidingen van jouw automatiseringen.",
+              "priceSpecification": {"@type": "PriceSpecification", "minPrice": 200, "maxPrice": 400}
+            }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://doable-ai.nl/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Welke processen kunnen worden geautomatiseerd?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bijna elk repetitief bedrijfsproces: lead opvolging, documentverwerking (facturen, offertes, werkbonnen), klantcommunicatie via e-mail of WhatsApp, systeem-integraties (CRM naar boekhouding), rapportages en maatwerk workflows. In elk type bedrijf — bouw, zorg, logistiek, dienstverlening."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wat kost bedrijfsautomatisering voor MKB?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Een eenmalige automatisering van één proces kost €500–1.000. Een volledig Automation Pakket (3–5 gekoppelde processen) kost €1.500–3.500. Maandelijks beheer en onderhoud kost €200–400 per maand. Alles begint met een gratis intake van 30 minuten."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hoe snel is de terugverdientijd van automatisering?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "De meeste klanten verdienen hun investering binnen 6 tot 12 weken terug door de uren die ze besparen. Gemiddeld besparen onze klanten 5 tot 15 uur per week aan handmatig werk."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Heb ik technische kennis nodig voor automatisering?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nee. Jij vertelt ons het probleem in gewone taal — wij lossen het op. Je hoeft niets te begrijpen van de techniek achter de oplossing. Die werkt gewoon, op de achtergrond."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hoe werkt het traject bij Doable AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In drie stappen: (1) Gratis intake van 30 minuten — jij vertelt welke taken de meeste tijd kosten. (2) Wij bouwen een maatwerk automatisering afgestemd op jouw bedrijf. (3) Binnen enkele weken draait de automatisering en merk je direct de tijdwinst. Wij blijven bereikbaar voor aanpassingen."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600;1,9..144,700;1,9..144,900&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -966,6 +1093,17 @@
     /* ── FOCUS ── */
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+    /* ── SEO — visueel verborgen maar semantisch aanwezig ── */
+    .seo-heading {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .hero-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1028,6 +1166,9 @@
     </div>
   </div>
 
+  <!-- SEO: verborgen maar semantisch aanwezig voor zoekmachines -->
+  <h1 class="seo-heading">Automatisering voor MKB in Groningen en Noord-Nederland — Doable AI</h1>
+
   <!-- HERO -->
   <section id="hero">
     <div class="hero-dot-grid"></div>
@@ -1042,9 +1183,9 @@
             </span>
             Automatisering voor Noord-Nederlands MKB
           </div>
-          <h1 class="display hero-title">
+          <p class="display hero-title" aria-hidden="true" role="presentation">
             Meer tijd.<br><em>Minder gedoe.</em>
-          </h1>
+          </p>
           <p class="hero-sub">
             Elke dag verliest jouw team uren aan handmatige taken — offertes, werkbonnen, e-mails, rapporten. Wij automatiseren dat. Zodat jij je kan focussen op je vak.
           </p>

@@ -299,7 +299,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      flex-wrap: nowrap;
+      overflow: hidden;
     }
+    .nav-links { flex-wrap: nowrap; }
     .nav-logo {
       font-family: 'Fraunces', serif;
       font-weight: 700;
@@ -1259,7 +1262,7 @@
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
+    @media (max-width: 1024px) {
       .hero-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero-visual { display: none; }
       .why-left { position: static; }

@@ -6,7 +6,7 @@
 async function requireAuth(expectedRole = null) {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) {
-    window.location.href = '/login.html';
+    window.location.href = '/portal/login.html';
     return null;
   }
   const role = user.user_metadata?.role ?? 'client';
@@ -23,7 +23,7 @@ async function requireAuth(expectedRole = null) {
 // Uitloggen
 async function logout() {
   await supabase.auth.signOut();
-  window.location.href = '/login.html';
+  window.location.href = '/portal/login.html';
 }
 
 // Huidige user ophalen (zonder redirect)

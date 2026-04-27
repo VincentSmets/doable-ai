@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inloggen — Doable AI Portaal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,700;1,500;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4EFE6; --ink: #100E09; --ink-muted: #5C5648;
+      --accent: #1A7A47; --accent-h: #14623A;
+      --border: rgba(24,22,15,0.10); --r: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg); color: var(--ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      max-width: 420px; width: 100%;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; padding: 40px 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .logo {
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 700;
+      font-size: 32px; text-align: center; margin-bottom: 8px;
+    }
+    .logo span { color: var(--accent); }
+    .subtitle {
+      text-align: center; color: var(--ink-muted);
+      font-size: 14px; margin-bottom: 32px;
+    }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    input {
+      width: 100%; padding: 12px 14px;
+      font-family: inherit; font-size: 14px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r); transition: border-color 150ms ease;
+    }
+    input:focus { outline: none; border-color: var(--accent); }
+    .btn {
+      width: 100%; padding: 12px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: var(--r);
+      cursor: pointer; transition: background 150ms ease;
+    }
+    .btn:hover { background: var(--accent-h); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .magic-link-btn {
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--border); margin-top: 8px;
+    }
+    .magic-link-btn:hover { background: var(--bg); }
+    .divider {
+      text-align: center; color: var(--ink-muted);
+      font-size: 12px; margin: 16px 0;
+    }
+    .msg { padding: 12px; border-radius: var(--r); font-size: 13px; margin-top: 16px; }
+    .msg.error { background: #FEE2E2; color: #991B1B; }
+    .msg.success { background: #D1FAE5; color: #065F46; }
+    .back-link {
+      display: block; text-align: center;
+      color: var(--ink-muted); font-size: 13px;
+      text-decoration: none; margin-top: 24px;
+    }
+    .back-link:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo">Doable<span>.</span></div>
+    <p class="subtitle">Log in op je portaal</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" required autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="password">Wachtwoord</label>
+        <input type="password" id="password" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn" id="loginBtn">Inloggen</button>
+    </form>
+
+    <div class="divider">— of —</div>
+
+    <button type="button" class="btn magic-link-btn" id="magicBtn">Stuur magic link</button>
+
+    <div id="msg"></div>
+
+    <a href="/" class="back-link">← Terug naar website</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/portal/js/config.js"></script>
+  <script>
+    const form = document.getElementById('loginForm');
+    const emailEl = document.getElementById('email');
+    const passwordEl = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const magicBtn = document.getElementById('magicBtn');
+    const msg = document.getElementById('msg');
+
+    function showMsg(text, type) {
+      msg.innerHTML = `<div class="msg ${type}">${text}</div>`;
+    }
+
+    async function redirectByRole(user) {
+      const role = user.user_metadata?.role ?? 'client';
+      window.location.href = role === 'admin'
+        ? '/portal/admin/index.html'
+        : '/portal/client/index.html';
+    }
+
+    // Auto-redirect als al ingelogd
+    (async () => {
+      const { data: { user } } = await window.supabase.auth.getUser();
+      if (user) await redirectByRole(user);
+    })();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginBtn.disabled = true;
+      msg.innerHTML = '';
+      const { data, error } = await window.supabase.auth.signInWithPassword({
+        email: emailEl.value, password: passwordEl.value
+      });
+      loginBtn.disabled = false;
+      if (error) return showMsg(error.message, 'error');
+      await redirectByRole(data.user);
+    });
+
+    magicBtn.addEventListener('click', async () => {
+      if (!emailEl.value) return showMsg('Vul eerst je e-mail in', 'error');
+      magicBtn.disabled = true;
+      const { error } = await window.supabase.auth.signInWithOtp({
+        email: emailEl.value,
+        options: { emailRedirectTo: window.location.origin + '/portal/login.html' }
+      });
+      magicBtn.disabled = false;
+      if (error) return showMsg(error.message, 'error');
+      showMsg('Check je inbox — we hebben je een inloglink gestuurd.', 'success');
+    });
+  </script>
+</body>
+</html>
